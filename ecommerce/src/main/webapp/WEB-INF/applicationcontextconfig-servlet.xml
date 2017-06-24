@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:webflow-config="http://www.springframework.org/schema/webflow-config"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans.xsd 
+       http://www.springframework.org/schema/security 
+       http://www.springframework.org/schema/security/spring-security.xsd 
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/webflow-config 
+       http://www.springframework.org/schema/webflow-config/spring-webflow-config.xsd">
+
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="org.h2.Driver" />
+		<property name="url" value="jdbc:h2:tcp://localhost/~/ecommerce1" />
+		<property name="username" value="sa" />
+		<property name="password" value="" />
+	</bean>
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+			</props>
+		</property>
+		<property name="annotatedClasses"><!-- Entities -->
+			<list>
+				<value>com.niit.ecommerce.domain.Category</value>
+				<value>com.niit.ecommerce.domain.Product</value>
+				<value>com.niit.ecommerce.domain.User</value>
+				<value>com.niit.ecommerce.domain.Supplier</value>
+				<value>com.niit.ecommerce.domain.ShippingAddress</value>
+				<value>com.niit.ecommerce.domain.BillingAddress</value>
+				<value>com.niit.ecommerce.domain.Customer</value>
+				<value>com.niit.ecommerce.domain.Cart</value>
+				<value>com.niit.ecommerce.domain.CartItem</value>
+				<value>com.niit.ecommerce.domain.CustomerOrder</value>
+
+			</list>
+		</property>
+
+	</bean>
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+
+	<!-- security -->
+
+	<security:http auto-config="true" use-expressions="true">
+		<security:csrf disabled="true" />
+		<security:intercept-url pattern="/index"
+			access="permitAll" />
+
+		<security:intercept-url pattern="/home" access="permitAll" />
+		<security:intercept-url pattern="/login"
+			access="permitAll" />
+		<security:intercept-url pattern="/get**"
+			access="hasAnyRole('ROLE_ADMIN','ROLE_USER')" />
+
+
+		<security:intercept-url pattern="/adminHome"
+			access="hasRole('ROLE_ADMIN')" />
+
+		<security:intercept-url pattern="/manage_product_**"
+			access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/manage_supplier_**"
+			access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/manage_category_**"
+			access="hasRole('ROLE_ADMIN')" />
+
+
+
+		<security:form-login login-page="/login"
+			authentication-failure-url="/login?error" login-processing-url="/j_spring_security_check"
+			default-target-url="/home" username-parameter="j_username"
+			password-parameter="j_password" />
+		<security:logout logout-success-url="/login?logout"
+			logout-url="/j_spring_security_logout" />
+	</security:http>
+
+
+	<security:authentication-manager>
+		<security:authentication-provider>
+
+			<security:jdbc-user-service
+				data-source-ref="dataSource" authorities-by-username-query="SELECT name, role FROM   user  WHERE name =?"
+				users-by-username-query="SELECT  name, password ,enabled FROM user WHERE name = ?" />
+
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+
+
+	<!--web flow -->
+	<webflow-config:flow-executor id="flowExecutor"
+		flow-registry="flowRegistry" />
+
+	<webflow-config:flow-registry id="flowRegistry"
+		base-path="/WEB-INF/flows">
+		<webflow-config:flow-location path="/checkout/checkout-flow.xml"
+			id="checkout" />
+	</webflow-config:flow-registry>
+
+	<bean id="flowHandlerMapping"
+		class="org.springframework.webflow.mvc.servlet.FlowHandlerMapping">
+		<property name="flowRegistry" ref="flowRegistry" />
+		<property name="order" value="0"/>
+	</bean>
+
+	<bean id="flowHandlerAdapter"
+		class="org.springframework.webflow.mvc.servlet.FlowHandlerAdapter">
+		<property name="flowExecutor" ref="flowExecutor" />
+	</bean>
+
+</beans>
