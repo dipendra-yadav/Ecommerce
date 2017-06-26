@@ -89,12 +89,15 @@
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach var="cartItem" items="${order.cart.cartItem}">
+										<c:set var="grandTotal" value="0.0"></c:set>
+										<c:forEach var="cartItem" items="${order.cart.cartItems}">
 											<tr>
-												<td class="col-md-9"><em>${cartItem.product.productName}</em></td>
+												<td class="col-md-9"><em>${cartItem.product.name}</em></td>
 												<td class="col-md-1" style="text-align: center">${cartItem.quantity}</td>
-												<td class="col-md-1" style="text-align: center">${cartItem.product.productPrice}</td>
+												<td class="col-md-1" style="text-align: center">${cartItem.product.price}</td>
 												<td class="col-md-1" style="text-align: center">${cartItem.totalPrice}</td>
+												<c:set var="grandTotal"
+													value="${grandTotal +cartItem.totalPrice}"></c:set>
 											</tr>
 										</c:forEach>
 
@@ -108,7 +111,7 @@
 											</td>
 											<td class="text-center text-danger">
 												<h4>
-													<strong> ${order.cart.grandTotal}</strong>
+													<strong>Rs ${grandTotal}</strong>
 												</h4>
 											</td>
 										</tr>

@@ -37,7 +37,7 @@
 			<section class="container">
 				<p>
 					<a href="<spring:url value="/productList" />"
-						class="btn btn-warning">Browse All Productss</a>
+						class="btn btn-warning">Browse All Products</a>
 				</p>
 			</section>
 		</div>

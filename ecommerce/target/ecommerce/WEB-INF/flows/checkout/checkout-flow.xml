@@ -5,9 +5,10 @@
 
 	<var name="order" class="com.niit.ecommerce.domain.CustomerOrder" />
 
-	<action-state id="addCartToOrder">
+	<action-state id="validateState">
 		<evaluate expression="cartDAOImpl.validate(requestParameters.cartId)" result="order.cart" />
 		<transition to="invalidCartWarning" on-exception="java.io.IOException" />
+	
 		<transition to="collectCustomerInfo" />
 	</action-state>
 
@@ -45,9 +46,6 @@
 
 	<global-transitions>
 		<transition on="cancel" to="cancelCheckout" />
-	</global-transitions>
-	<global-transitions>
-		<transition on="OK" to="src/main/webapp/WEB-INF/views/home.jsp" />
 	</global-transitions>
 
 </flow>

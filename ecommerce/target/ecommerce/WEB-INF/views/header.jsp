@@ -44,17 +44,19 @@
 
 				<c:if test="${pageContext.request.userPrincipal.name!=null}">
 					<security:authorize access="hasRole('ROLE_ADMIN')">
-						<li><a href="<c:url value="/manage_product_create"/>">Add
-								New Product</a></li>
-
-						<li><a href="manage_category_create" role="button">Add
-								Category</a></li>
-						<li><a href="manage_supplier_create" role="button">Add
-								Supplier</a></li>
-					</security:authorize>
-					<li><a href="<c:url value="/getAllProducts"/>">Browse All
+						<li><a href="<c:url value="/getAllProducts"/>">Browse All
 							Products</a></li>
 
+
+						<li><a href="<c:url value="/getAllCategories"/>">Browse All
+							Categories</a></li>
+							<li><a href="<c:url value="/getAllSuppliers"/>">Browse All
+							Suppliers</a></li>
+					</security:authorize>
+						<security:authorize access="hasRole('ROLE_USER')">
+					<li><a href="<c:url value="/getAllProducts"/>">Browse All
+							Products</a></li>
+</security:authorize>
 
 					<security:authorize access="hasRole('ROLE_USER')">
 						<li><a href="<c:url value="/cart/getCartId"></c:url>">Cart</a></li>
