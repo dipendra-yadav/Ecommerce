@@ -26,8 +26,8 @@
 <body>
 <!-- DC Page Header Start -->
   <div class="dc_gradient4">
-    <h1><span></span>Yuzu</h1>
-    <h2>The Electronics world</h2>
+    <h1><span></span></h1>
+    <h2>The Book world</h2>
   </div>
 <!-- DC Page Header End -->
 
