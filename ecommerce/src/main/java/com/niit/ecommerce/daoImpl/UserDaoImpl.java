@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -12,12 +13,15 @@ import org.springframework.stereotype.Repository;
 
 import com.niit.ecommerce.dao.UserDAO;
 import com.niit.ecommerce.domain.User;
+import com.niit.listeners.Log4jUtil;
 
 @Transactional
 @Repository
 public class UserDaoImpl implements UserDAO {
 	@Autowired
 	private SessionFactory sessionFactory;
+
+	Logger log = Logger.getLogger(UserDaoImpl.class);
 
 	// List All users
 	public List<User> list() {
@@ -75,11 +79,14 @@ public class UserDaoImpl implements UserDAO {
 	// save user
 	public boolean save(User user) {
 		try {
+			log.debug("save starts**********");
 			Session session = sessionFactory.openSession();
 			Transaction tx = session.beginTransaction();
 			user.setRole("ROLE_USER");
 			user.setEnabled(true);
 			session.save(user);
+			log.debug("save operation done***********");
+
 			tx.commit();
 			session.flush();
 			session.close();
@@ -87,7 +94,7 @@ public class UserDaoImpl implements UserDAO {
 		}
 
 		catch (Exception e) {
-			System.out.println("exception occured******");
+			log.error("exception occured while  User registration ");
 			e.printStackTrace();
 			return false;
 		}

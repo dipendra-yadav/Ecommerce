@@ -7,7 +7,7 @@
 <head>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>The Electronics Fountain</title>
+<title>The Book World </title>
 <%@ taglib prefix="security"
 	uri="http://www.springframework.org/security/tags"%>
 <!-- DC Horizontal Carousel CSS -->

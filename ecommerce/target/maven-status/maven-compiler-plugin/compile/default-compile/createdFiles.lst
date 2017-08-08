@@ -32,5 +32,6 @@ com\niit\ecommerce\daoImpl\CustomerOrderDaoImpl.class
 com\niit\ecommerce\daoImpl\CartDaoImpl.class
 com\niit\ecommerce\domain\Product.class
 com\niit\ecommerce\domain\CartItem.class
+com\niit\listeners\Log4jUtil.class
 com\niit\ecommerce\domain\Customer.class
 com\niit\ecommerce\domain\CustomerOrder.class

@@ -1,6 +1,4 @@
-var myapp = angular.module("myapp", []).controller(
-		"productController",
-		function($scope, $http) {
+var myapp = angular.module("myapp", []).controller("productController",function($scope, $http) {
 			
 			// To get all products
 			$scope.getAllProducts = function() {

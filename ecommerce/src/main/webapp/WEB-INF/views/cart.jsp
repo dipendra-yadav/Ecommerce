@@ -16,12 +16,12 @@
 <title>Cart</title>
 
 <script src="<c:url value="/resources/js/controller.js"></c:url>"></script>
-
-</head>
-<body>
 <style type="text/css">
 body { background-image:url('http://cdn.dcodes.net/2/bg_images/wood/w15.jpg'); }
 </style>
+
+</head>
+<body>
 	<div class="container-wrapper">
 		<div class="container">
 
