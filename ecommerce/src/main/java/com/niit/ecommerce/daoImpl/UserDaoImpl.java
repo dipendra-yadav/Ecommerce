@@ -79,13 +79,13 @@ public class UserDaoImpl implements UserDAO {
 	// save user
 	public boolean save(User user) {
 		try {
-			log.debug("save starts**********");
+			log.info("save starts**********");
 			Session session = sessionFactory.openSession();
 			Transaction tx = session.beginTransaction();
 			user.setRole("ROLE_USER");
 			user.setEnabled(true);
 			session.save(user);
-			log.debug("save operation done***********");
+			log.info("save operation done***********");
 
 			tx.commit();
 			session.flush();
@@ -128,6 +128,8 @@ public class UserDaoImpl implements UserDAO {
 		String hql = "from User where name='" + name + "'and password='" + password + "'";
 		Session session = sessionFactory.openSession();
 		User user = (User) session.createQuery(hql).uniqueResult();
+		System.out.println("User retrieved from the Database=\t" + user);
+		log.info("User retrieved from the Database=\t" + user);
 		if (user == null)
 			return false;
 
