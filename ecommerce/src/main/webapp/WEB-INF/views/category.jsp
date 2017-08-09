@@ -15,11 +15,15 @@
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <!-- DC Table Styles I CSS -->
 <link type="text/css" rel="stylesheet" href="http://cdn.dcodes.net/2/tables1/css/dc_tables1.css" />
-</head>
-<body>
+
 <style type="text/css">
 body { background-image:url('http://cdn.dcodes.net/2/bg_images/wood/w15.jpg'); }
 </style>
+
+<%@include file="header.jsp"%>
+</head>
+<body>
+
 <center>
 	<h2>
 		Manage Category
@@ -118,7 +122,7 @@ body { background-image:url('http://cdn.dcodes.net/2/bg_images/wood/w15.jpg'); }
 	<br>
 	<%-- ${category.id} &nbsp;&nbsp; ${category.name}&nbsp;&nbsp;
 	${category.description}&nbsp;&nbsp; --%>
-
+<%@ include file="footer.jsp"%>
 
 </body>
 </html>
